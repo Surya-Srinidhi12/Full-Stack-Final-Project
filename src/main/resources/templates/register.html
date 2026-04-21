@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Register - Job Portal')}"></head>
+<body>
+
+<nav th:replace="~{fragments :: navbarGuest}"></nav>
+
+<div class="main-content">
+    <div class="auth-container glass-card" style="max-width: 500px;">
+        <h2 style="margin-bottom: 1rem; text-align: center;">Create an Account</h2>
+        <p style="text-align: center; color: var(--text-muted); margin-bottom: 2rem;">Join as a student to find jobs, or as an employer to post them.</p>
+        
+        <div th:if="${error}" class="badge badge-red" style="display: block; margin-bottom: 1rem; padding: 0.5rem;" th:text="${error}">
+        </div>
+
+        <form th:action="@{/register}" th:object="${user}" method="post">
+            
+            <div class="form-group">
+                <label class="form-label">I am a...</label>
+                <div style="display: flex; gap: 1rem;">
+                    <label style="flex: 1; border: 1px solid var(--border); padding: 1rem; border-radius: var(--radius); text-align: center; cursor: pointer; transition: 0.2s;">
+                        <input type="radio" th:field="*{role}" value="STUDENT" required> Student
+                    </label>
+                    <label style="flex: 1; border: 1px solid var(--border); padding: 1rem; border-radius: var(--radius); text-align: center; cursor: pointer; transition: 0.2s;">
+                        <input type="radio" th:field="*{role}" value="EMPLOYER" required> Employer
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="fullName">Full Name</label>
+                <input type="text" id="fullName" th:field="*{fullName}" class="form-control" placeholder="John Doe" required autofocus>
+            </div>
+
+            <!-- Student specific fields, can be hidden via JS later but we show for now or handle via profile -->
+            <div id="studentFields" style="display: none; background: #f9fafb; padding: 1rem; border-radius: var(--radius); margin-bottom: 1.5rem; border: 1px dashed var(--border);">
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem;">Student Details</p>
+                <div class="form-group">
+                    <label class="form-label" for="dept">Department</label>
+                    <input type="text" id="dept" th:field="*{dept}" class="form-control" placeholder="Computer Science">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="yearOfStudy">Year of Study</label>
+                    <input type="text" id="yearOfStudy" th:field="*{yearOfStudy}" class="form-control" placeholder="3rd Year">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="email">Email Address</label>
+                <input type="email" id="email" th:field="*{email}" class="form-control" placeholder="john@example.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <input type="password" id="password" th:field="*{password}" class="form-control" placeholder="••••••••" required minlength="6">
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Register</button>
+        </form>
+        
+        <p style="text-align: center; margin-top: 1.5rem; font-size: 0.875rem; color: var(--text-muted);">
+            Already have an account? <a href="/login">Sign in</a>
+        </p>
+    </div>
+</div>
+
+<script>
+    // Simple JS to toggle student fields
+    document.querySelectorAll('input[name="role"]').forEach((elem) => {
+        elem.addEventListener("change", function(event) {
+            var item = event.target.value;
+            var stdFields = document.getElementById('studentFields');
+            if (item === 'STUDENT') {
+                stdFields.style.display = 'block';
+            } else {
+                stdFields.style.display = 'none';
+                document.getElementById('dept').value = '';
+                document.getElementById('yearOfStudy').value = '';
+            }
+        });
+    });
+</script>
+</body>
+</html>

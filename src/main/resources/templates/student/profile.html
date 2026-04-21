@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('My Profile')}"></head>
+<body>
+
+<nav th:replace="~{fragments :: navbarStudent}"></nav>
+
+<div class="main-content">
+    <div style="display: flex; gap: 2rem; max-width: 1000px; margin: 0 auto; align-items: flex-start;">
+        
+        <!-- Sidebar Profile -->
+        <div class="glass-card" style="width: 300px; position: sticky; top: 100px;">
+            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--primary), #8B5CF6); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; margin: 0 auto 1rem;">
+                <span th:text="${#strings.substring(student.fullName, 0, 1)}">A</span>
+            </div>
+            
+            <h3 style="text-align: center; margin-bottom: 0.25rem;" th:text="${student.fullName}">Name</h3>
+            <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;" th:text="${student.email}">Email</p>
+            
+            <hr style="border:0; border-top:1px solid var(--border); margin: 1rem 0;">
+            
+            <div style="margin-bottom: 1rem;" th:if="${student.dept}">
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.2rem;">Department</p>
+                <p style="font-weight: 500;" th:text="${student.dept}">DEPT</p>
+            </div>
+            
+            <div th:if="${student.yearOfStudy}">
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.2rem;">Year of Study</p>
+                <p style="font-weight: 500;" th:text="${student.yearOfStudy}">YEAR</p>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div style="flex: 1;">
+            <h2 style="margin-bottom: 1.5rem;">My Applications</h2>
+            
+            <div class="glass-card">
+                <div th:if="${#lists.isEmpty(applications)}" style="text-align: center; color: var(--text-muted); padding: 3rem;">
+                    You haven't applied to any jobs yet.
+                    <br><br>
+                    <a href="/student/dashboard" class="btn btn-primary">Find Jobs</a>
+                </div>
+                
+                <table class="modern-table" th:unless="${#lists.isEmpty(applications)}">
+                    <thead>
+                        <tr>
+                            <th>Job Title</th>
+                            <th>Company</th>
+                            <th>Applied On</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="app : ${applications}">
+                            <td style="font-weight: 500;">
+                                <a th:href="@{/student/job/{id}(id=${app.job.id})}" th:text="${app.job.title}">Title</a>
+                            </td>
+                            <td th:text="${app.job.employer.fullName}">Company</td>
+                            <td th:text="${app.appliedAt}">Date</td>
+                            <td>
+                                <span th:if="${app.status == 'APPLIED'}" class="badge badge-yellow">Under Review</span>
+                                <span th:if="${app.status == 'SHORTLISTED'}" class="badge badge-green">Shortlisted 🎉</span>
+                                <span th:if="${app.status == 'REJECTED'}" class="badge badge-red">Declined</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

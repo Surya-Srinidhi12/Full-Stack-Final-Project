@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Post Job')}"></head>
+<body>
+
+<nav th:replace="~{fragments :: navbarEmployer}"></nav>
+
+<div class="main-content">
+    <div style="max-width: 800px; margin: 0 auto;">
+        <h2 style="margin-bottom: 2rem;">Post a New Job</h2>
+        
+        <div class="glass-card">
+            <form th:action="@{/employer/job/post}" th:object="${job}" method="post">
+                
+                <div class="form-group">
+                    <label class="form-label" for="title">Job Title</label>
+                    <input type="text" id="title" th:field="*{title}" class="form-control" placeholder="e.g. Senior Software Engineer" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="description">Job Description</label>
+                    <textarea id="description" th:field="*{description}" class="form-control" rows="6" placeholder="Describe the role, responsibilities, and requirements..." required></textarea>
+                </div>
+                
+                <div style="display: flex; gap: 1.5rem;">
+                    <div class="form-group" style="flex: 1;">
+                        <label class="form-label" for="skillsRequired">Skills Required</label>
+                        <input type="text" id="skillsRequired" th:field="*{skillsRequired}" class="form-control" placeholder="Java, Spring Boot, React">
+                    </div>
+                    
+                    <div class="form-group" style="flex: 1;">
+                        <label class="form-label" for="salary">Salary (Optional)</label>
+                        <input type="text" id="salary" th:field="*{salary}" class="form-control" placeholder="$100k - $120k">
+                    </div>
+                </div>
+                
+                <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem;">
+                    <a href="/employer/dashboard" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Post Job</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

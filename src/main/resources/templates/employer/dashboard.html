@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Employer Dashboard')}"></head>
+<body>
+
+<nav th:replace="~{fragments :: navbarEmployer}"></nav>
+
+<div class="main-content">
+    <div class="dashboard-header">
+        <div>
+            <h2>Employer Dashboard</h2>
+            <p style="color: var(--text-muted); margin-top: 0.5rem;">Manage your job postings and applicants.</p>
+        </div>
+        <a href="/employer/job/post" class="btn btn-primary">+ Post New Job</a>
+    </div>
+
+    <div th:if="${success}" class="badge badge-green" style="display: block; margin-bottom: 2rem; padding: 0.75rem;" th:text="${success}"></div>
+
+    <div class="glass-card">
+        <h3 style="margin-bottom: 1.5rem;">Your Posted Jobs</h3>
+        
+        <div th:if="${#lists.isEmpty(jobs)}" style="text-align: center; color: var(--text-muted); padding: 3rem;">
+            No jobs posted yet. Click the button above to post your first job!
+        </div>
+        
+        <table class="modern-table" th:unless="${#lists.isEmpty(jobs)}">
+            <thead>
+                <tr>
+                    <th>Job Title</th>
+                    <th>Salary</th>
+                    <th>Posted On</th>
+                    <th>Applicants</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="job : ${jobs}">
+                    <td th:text="${job.title}" style="font-weight: 500;">Title</td>
+                    <td th:text="${job.salary}">Salary</td>
+                    <td th:text="${job.createdAt}">Date</td>
+                    <td>
+                        <span class="badge badge-blue" th:text="${#lists.size(job.applications) + ' Applied'}"></span>
+                    </td>
+                    <td>
+                        <a th:href="@{/employer/job/{id}/applicants(id=${job.id})}" class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">View Applicants</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">Job Portal</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<!-- Navbar for Guest -->
+<nav class="navbar" th:fragment="navbarGuest">
+    <div class="nav-container">
+        <div class="nav-logo">
+            <a href="/"><h1>JobPortal</h1></a>
+        </div>
+        <div class="nav-links">
+            <a href="/login" class="btn btn-secondary">Login</a>
+            <a href="/register" class="btn btn-primary">Sign Up</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Navbar for Student -->
+<nav class="navbar" th:fragment="navbarStudent">
+    <div class="nav-container">
+        <div class="nav-logo">
+            <a href="/"><h1>JobPortal <span style="font-size: 0.8rem; color: #6B7280; font-weight: normal;">Student</span></h1></a>
+        </div>
+        <div class="nav-links">
+            <a href="/student/dashboard" class="nav-item">Dashboard</a>
+            <a href="/student/profile" class="nav-item">Profile</a>
+            <form th:action="@{/logout}" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-secondary">Logout</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<!-- Navbar for Employer -->
+<nav class="navbar" th:fragment="navbarEmployer">
+    <div class="nav-container">
+        <div class="nav-logo">
+            <a href="/"><h1>JobPortal <span style="font-size: 0.8rem; color: #6B7280; font-weight: normal;">Employer</span></h1></a>
+        </div>
+        <div class="nav-links">
+            <a href="/employer/dashboard" class="nav-item">Dashboard</a>
+            <a href="/employer/job/post" class="nav-item">Post Job</a>
+            <form th:action="@{/logout}" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-secondary">Logout</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+</body>
+</html>

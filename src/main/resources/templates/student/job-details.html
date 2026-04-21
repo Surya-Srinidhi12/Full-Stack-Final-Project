@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(${job.title} + ' - Job Details')}"></head>
+<body>
+
+<nav th:replace="~{fragments :: navbarStudent}"></nav>
+
+<div class="main-content">
+    <div style="max-width: 800px; margin: 0 auto;">
+        
+        <a href="/student/dashboard" class="btn btn-secondary" style="margin-bottom: 2rem;">&larr; Back to Dashboard</a>
+        
+        <div th:if="${error}" class="badge badge-red" style="display: block; margin-bottom: 2rem; padding: 0.75rem;" th:text="${error}"></div>
+
+        <div class="glass-card">
+            <h2 th:text="${job.title}" style="margin-bottom: 0.5rem; font-size: 1.8rem;">Job Title</h2>
+            <div style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem;">
+                <span th:text="${job.employer.fullName}">Company</span> &bull; 
+                <span th:text="${job.createdAt}">Date</span>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--text-main);">About the Role</h4>
+                <p style="white-space: pre-wrap;" th:text="${job.description}">Description...</p>
+            </div>
+
+            <div style="display: flex; gap: 2rem; margin-bottom: 2rem; padding: 1.5rem; background: var(--bg-light); border-radius: var(--radius);">
+                <div th:if="${job.skillsRequired}">
+                    <h5 style="color: var(--text-muted); margin-bottom: 0.25rem;">Skills Required</h5>
+                    <div style="font-weight: 500;" th:text="${job.skillsRequired}"></div>
+                </div>
+                <div th:if="${job.salary != null && !job.salary.isEmpty()}">
+                    <h5 style="color: var(--text-muted); margin-bottom: 0.25rem;">Salary</h5>
+                    <div style="font-weight: 500;" th:text="${job.salary}"></div>
+                </div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid var(--border); margin: 2rem 0;">
+
+            <div th:if="${hasApplied}">
+                <div class="badge badge-green" style="font-size: 1rem; padding: 0.5rem 1rem;">
+                    ✓ You have already applied for this position
+                </div>
+            </div>
+
+            <div th:unless="${hasApplied}">
+                <h3 style="margin-bottom: 1rem;">Apply Now</h3>
+                <form th:action="@{/student/job/{id}/apply(id=${job.id})}" method="post" enctype="multipart/form-data" style="background: #fdfdfd; padding: 1.5rem; border: 1px solid var(--border); border-radius: var(--radius);">
+                    <div class="form-group">
+                        <label class="form-label">Upload Resume (PDF, DOCX)</label>
+                        <input type="file" name="resume" class="form-control" accept=".pdf,.doc,.docx" required>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Max file size: 5MB.</p>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Application</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Student Dashboard')}"></head>
+<body>
+
+<nav th:replace="~{fragments :: navbarStudent}"></nav>
+
+<div class="main-content">
+    <div class="dashboard-header" style="flex-direction: column; align-items: flex-start; gap: 1.5rem;">
+        <div>
+            <h2>Explore Opportunities</h2>
+            <p style="color: var(--text-muted); margin-top: 0.5rem;">Find the perfect job that matches your skills.</p>
+        </div>
+        
+        <form th:action="@{/student/dashboard}" method="get" style="width: 100%; max-width: 600px; display: flex; gap: 1rem;">
+            <input type="text" name="query" class="form-control" placeholder="Search by job title or keyword..." th:value="${query}">
+            <button type="submit" class="btn btn-primary">Search</button>
+            <a href="/student/dashboard" class="btn btn-secondary" th:if="${query != null}">Clear</a>
+        </form>
+    </div>
+
+    <div th:if="${success}" class="badge badge-green" style="display: block; margin-bottom: 2rem; padding: 0.75rem;" th:text="${success}"></div>
+
+    <div th:if="${#lists.isEmpty(jobs)}" style="text-align: center; margin-top: 4rem;">
+        <h3 style="color: var(--text-muted);">No jobs found.</h3>
+        <p style="color: var(--border);">Try adjusting your search filters.</p>
+    </div>
+
+    <div class="job-grid" th:unless="${#lists.isEmpty(jobs)}">
+        <div class="glass-card job-card" th:each="job : ${jobs}">
+            <div class="job-card-header">
+                <h3 class="job-card-title" th:text="${job.title}">Job Title</h3>
+                <div class="job-card-company">
+                    <span style="font-weight: 500;" th:text="${job.employer.fullName}">Company Name</span> 
+                    &bull; <span th:text="${job.createdAt}">Date</span>
+                </div>
+            </div>
+            <div class="job-card-body">
+                <p th:text="${#strings.substring(job.description, 0, T(java.lang.Math).min(job.description.length(), 100))} + '...'">Description snippet...</p>
+                <div class="job-skills" th:if="${job.skillsRequired}">
+                    <!-- Simple scriptlet to split by comma could be used here but we just show it -->
+                    <span class="skill-tag" th:text="${job.skillsRequired}">Skills</span>
+                </div>
+                <div style="margin-top: 1rem; font-weight: 500; font-size: 0.9rem;" th:if="${job.salary != null && !job.salary.isEmpty()}">
+                    💰 <span th:text="${job.salary}"></span>
+                </div>
+            </div>
+            <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border);">
+                <a th:href="@{/student/job/{id}(id=${job.id})}" class="btn btn-primary" style="width: 100%;">View Details</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('JobPortal - Find Your Career Path')}"></head>
+<body>
+
+<div th:replace="~{fragments :: navbarGuest}"></div>
+
+<main class="main-content">
+    <section class="hero-section" style="text-align: center; padding: 6rem 1rem; background: linear-gradient(to bottom, #ffffff, #f9fafb); border-radius: 24px; margin-bottom: 4rem;">
+        <h1 style="font-size: 3.5rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: -0.025em; line-height: 1.1;">
+            Find your dream <span style="color: var(--primary);">internship</span> <br>or your next <span style="color: var(--secondary);">big role</span>.
+        </h1>
+        <p style="font-size: 1.25rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 2.5rem; line-height: 1.6;">
+            The most professional bridge between talented students and top employers. 
+            Apply with one click and track your status in real-time.
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+            <a href="/register" class="btn btn-primary" style="padding: 1rem 2.5rem; font-size: 1.1rem;">Get Started</a>
+            <a href="/login" class="btn btn-secondary" style="padding: 1rem 2.5rem; font-size: 1.1rem;">Explore Jobs</a>
+        </div>
+    </section>
+
+    <div class="job-grid" style="margin-top: -2rem;">
+        <!-- Feature Card 1 -->
+        <div class="glass-card">
+            <div style="height: 48px; width: 48px; background: #EEF2FF; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </div>
+            <h3 style="margin-bottom: 1rem;">For Students</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Build your profile, upload your resume once, and apply to unlimited opportunities with instant email confirmations.</p>
+        </div>
+
+        <!-- Feature Card 2 -->
+        <div class="glass-card">
+            <div style="height: 48px; width: 48px; background: #ECFDF5; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            </div>
+            <h3 style="margin-bottom: 1rem;">For Employers</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Post jobs in seconds, manage applicants from a powerful dashboard, and update status with automated notifications.</p>
+        </div>
+
+        <!-- Feature Card 3 -->
+        <div class="glass-card">
+            <div style="height: 48px; width: 48px; background: #FFFBEB; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            </div>
+            <h3 style="margin-bottom: 1rem;">Status Tracking</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Never wonder about your application again. Get notified via email as soon as an employer reviews your profile.</p>
+        </div>
+    </div>
+</main>
+
+<footer style="text-align: center; padding: 4rem 2rem; color: var(--text-muted); font-size: 0.875rem; border-top: 1px solid var(--border); margin-top: 4rem;">
+    <p>&copy; 2026 JobPortal Management System. Built with Spring Boot & MySQL.</p>
+</footer>
+
+<div th:replace="~{fragments :: aiChatbot}"></div>
+</body>
+</html>
